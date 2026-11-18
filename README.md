@@ -39,6 +39,7 @@ The whole thing lives behind one URL: `POST http://localhost:4000/posting`
 - [Input Validation Rules](#input-validation-rules)
 - [Error Handling Design](#error-handling-design)
 - [Running the Tests](#running-the-tests)
+- [Screenshots](#screenshots)
 - [Security Notes](#security-notes)
 
 ---
@@ -312,6 +313,42 @@ The suite (9 tests) covers:
 
 Platform calls are replaced with fake objects, so tests never post anything
 for real and never require API keys.
+
+---
+
+## Screenshots
+
+All screenshots below were taken during a **live run on 18 November 2026**,
+with the server started locally and real credentials configured in `.env`.
+
+### 1. Interactive API documentation (`/docs`)
+
+FastAPI's generated Swagger UI — the endpoint can be tried directly from the
+browser.
+
+![Swagger UI](screenshots/01-swagger-docs.jpg)
+
+### 2. Real message posted to Discord
+
+The same message sent through `POST /posting` arrived in the Discord
+`#general` channel via the webhook, posted by the bot at **20:51**:
+
+![Discord message](screenshots/02-discord-message.jpg)
+
+### 3. API response — 2 platforms succeeded
+
+The JSON report returned by the endpoint. Discord and Telegram both report
+`status: "success"` with date/time, while platforms without keys fail
+gracefully with a clear error — proving one platform's failure never stops
+the others:
+
+![API response](screenshots/03-api-response.jpg)
+
+> **Live verification (2026-11-18):** Discord ✅ and Telegram ✅ posted real
+> messages. The remaining four platforms (Dev.to, Mastodon, Hashnode,
+> Pastebin) are fully implemented and covered by the test suite, but report
+> `"not set in .env"` because no API keys were configured for them — they are
+> enabled simply by adding keys to `.env`.
 
 ---
 
